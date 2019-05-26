@@ -8,11 +8,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import state.GameStateManager;
 import state.MenuState;
+import state.SplashState;
 
 public class SubStrike extends ApplicationAdapter 
 {
-	public static final int WIDTH = 1365;
-	public static final int HEIGHT = 1109;
+	public static final int WIDTH = 1920;
+	public static final int HEIGHT = 1080;
 	public static final String TITLE = "Sub Strike";
 
 	private GameStateManager gsm;
@@ -24,7 +25,7 @@ public class SubStrike extends ApplicationAdapter
 		batch = new SpriteBatch();
 		gsm = new GameStateManager();
 		//Gdx.gl.glClearColor(1, 0, 0, 1);
-		gsm.push(new MenuState(gsm));
+		gsm.push(new SplashState(gsm));
 
 	}
 

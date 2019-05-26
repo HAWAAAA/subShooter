@@ -14,8 +14,8 @@ public class MenuState extends State
 	public MenuState(GameStateManager gsm) 
 	{
 		super(gsm);
-		background = new Texture("ocean.png");
-		play = new Texture("play.png");
+		background = new Texture("Main Menu.png");
+		//play = new Texture("play.png");
 	}
 
 	@Override
@@ -38,8 +38,8 @@ public class MenuState extends State
 	public void render(SpriteBatch sb) 
 	{
 		sb.begin();
-		sb.draw(background, 0, 0, SubStrike.HEIGHT, SubStrike.HEIGHT);
-		sb.draw(play, 682, 554 );
+		sb.draw(background, 0, 0, 1920, 1080);
+		//sb.draw(play, 682, 554 );
 		sb.end();
 	}
 
@@ -47,7 +47,7 @@ public class MenuState extends State
 	public void dispose()
 	{
 	background.dispose();
-	play.dispose();
+	//play.dispose();
 
 	}
 

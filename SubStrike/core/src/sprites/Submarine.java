@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 public class Submarine 
 {
 	private static final int GRAVITY = -15;
+	private static final int MOVEMENT = 100;
 	private Vector3 position;
 	private Vector3 velocity;
 	
@@ -15,7 +16,7 @@ public class Submarine
 	{
 		position = new Vector3(x, y, 0);
 		velocity = new Vector3(0, 0, 0);
-		sub = new Texture("submarine.png");
+		sub = new Texture("YellowSubmarine.png");
 		
 	}
 	
@@ -27,7 +28,7 @@ public class Submarine
 		}
 		velocity.add(0, GRAVITY, 0);
 		velocity.scl(dt);
-		position.add(0, velocity.y, 0);
+		position.add(MOVEMENT * dt, velocity.y, 0);
 		if (position.y < 0)
 		{
 			position.y = 0;
@@ -49,7 +50,7 @@ public class Submarine
 	
 	public void jump()
 	{
-		velocity.y = 250;
+		velocity.y = 350;
 		
 	}
 }
