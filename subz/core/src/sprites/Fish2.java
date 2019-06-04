@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import java.util.Random;
 
 
-public class Fish 
+public class Fish2 
 {
 
 	private Texture fish1;
@@ -18,9 +18,9 @@ public class Fish
 	private static final int MOVEMENT = -400;
 	private Vector3 position;
 	private Vector3 velocity;
-	public Fish(float x)
+	public Fish2(float x)
 	{
-		fish1 = new Texture("Fish1.png");
+		fish1 = new Texture("Fish2.png");
 		int rand = (int) (Math.random() * 690);
 		
 		

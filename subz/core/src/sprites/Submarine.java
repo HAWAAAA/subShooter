@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Submarine 
 {
-	private static final int GRAVITY = -15;
-	private static final int MOVEMENT = 5;
+	private static final int GRAVITY = 15;
+	private static final int MOVEMENT = 0;
 	private Vector3 position;
 	private Vector3 velocity;
 	
@@ -29,10 +29,15 @@ public class Submarine
 		velocity.add(0, GRAVITY, 0);
 		velocity.scl(dt);
 		position.add(MOVEMENT * dt, velocity.y, 0);
-		if (position.y < 0)
+		if (position.y < 0 )
 		{
 			position.y = 0;
 		}
+		if (position.y > 690)
+		{
+			position.y = 690;
+		}
+	
 		velocity.scl(1/dt); //adds scale version of velocity
 
 	}
@@ -50,7 +55,7 @@ public class Submarine
 	
 	public void jump()
 	{
-		velocity.y = 350;
+		velocity.y = -500;
 		
 	}
 }

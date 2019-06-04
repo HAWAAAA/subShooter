@@ -4,35 +4,31 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import java.util.Random;
+public class Torpedo {
 
+	private Texture TorpedoText;
 
-public class Fish 
-{
-
-	private Texture fish1;
-	private Vector2 posFish1;
 	
 
 
-	private static final int MOVEMENT = -400;
+	private static final int MOVEMENT = 800;
 	private Vector3 position;
 	private Vector3 velocity;
-	public Fish(float x)
+	public Torpedo(float x , float y)
 	{
-		fish1 = new Texture("Fish1.png");
-		int rand = (int) (Math.random() * 690);
+		TorpedoText = new Texture("Torpedo.png");
+	
 		
 		
-		position = new Vector3(x, rand, 0);
+		position = new Vector3(x, y, 0);
 		velocity = new Vector3(0, 0, 0);
 	
 			
 	}
 	
-	public Texture getFish1()
+	public Texture getTorpedoText()
 	{
-		return fish1;
+		return TorpedoText;
 	}
 	
 	public Vector3 getPosition()
@@ -51,5 +47,4 @@ public class Fish
 		velocity.scl(1/dt); //adds scale version of velocity
 
 	}
-
 }

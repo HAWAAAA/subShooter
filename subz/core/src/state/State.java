@@ -15,7 +15,7 @@ public abstract class State
 	{
 		this.gsm = gsm;
 		cam = new OrthographicCamera();
-	
+	  
 		mouse = new Vector3();
 		
 	}
