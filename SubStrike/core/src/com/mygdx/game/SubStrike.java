@@ -17,7 +17,7 @@ public class SubStrike extends ApplicationAdapter
 	public static final String TITLE = "Sub Strike";
 
 	private GameStateManager gsm;
-	private SpriteBatch batch;
+	public SpriteBatch batch;
 
 	
 	@Override

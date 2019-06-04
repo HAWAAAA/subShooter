@@ -13,7 +13,7 @@ public class Fish
 	private Random rand;
 	
 	
-	public Fish(float x)
+	public Fish(float x, float y)
 	{
 		fish1 = new Texture("Fish1.png");
 		rand = new Random();

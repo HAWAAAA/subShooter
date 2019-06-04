@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 public class Submarine 
 {
 	private static final int GRAVITY = -15;
-	private static final int MOVEMENT = 100;
+	private static final int MOVEMENT = 5;
 	private Vector3 position;
 	private Vector3 velocity;
 	

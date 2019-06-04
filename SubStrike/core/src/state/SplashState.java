@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class SplashState extends State
 {
 	private Texture loadScreen;
+	private float time = 0;
 
 	public SplashState(GameStateManager gsm) 
 	{
@@ -20,23 +21,33 @@ public class SplashState extends State
 	@Override
 	public void handleInput()
 	{
+		if (time > 3)
+		{
+		gsm.set(new MenuState(gsm));
+		dispose();
+		}
+		
+		/*
 		if (Gdx.input.isTouched())
 		{
 			gsm.set(new MenuState(gsm));
 			dispose();
 		}
 		
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY))
+		if (Gdx.input.isKeyJustPressed(Input.Keys.))
 		{
 			gsm.set(new MenuState(gsm));
 			dispose();
 		}
+		*/
+	
 	}
 
 	@Override
 	public void update(float dt) 
 	{
 		handleInput();
+		time += Gdx.graphics.getDeltaTime();
 	}
 
 	@Override
