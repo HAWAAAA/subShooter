@@ -32,14 +32,14 @@ public class MenuState extends State
 	final static int HOWTOPLAY_WIDTH = 414;
 	final static int HOWTOPLAY_HEIGHT = 50;
 	final static int HOWTOPLAY_X = 726;
-	final static int HOWTOPLAY_Y = 303;
+	final static int HOWTOPLAY_Y = 405;
 
 	
 	
 	final static int EXIT_WIDTH = 137;
 	final static int EXIT_HEIGHT = 50;
 	final static int EXIT_X = 868;
-	final static int EXIT_Y = 203;
+	final static int EXIT_Y = 303;
 	
 	
 	private Texture background;
@@ -109,7 +109,7 @@ public class MenuState extends State
 		//Start button
 		sb.draw(start, START_X, START_Y, START_WIDTH, START_HEIGHT);
 		int playX = SubStrike.WIDTH / 2 - START_WIDTH / 2;
-		if (Gdx.input.getX() < playX + START_WIDTH && Gdx.input.getX() > playX &&  SubStrike.HEIGHT - Gdx.input.getY() < 504 + START_HEIGHT && SubStrike.HEIGHT - Gdx.input.getAccelerometerY() > 504)
+		if (Gdx.input.getX() < playX + START_WIDTH && Gdx.input.getX() > playX &&  SubStrike.HEIGHT - Gdx.input.getY() < START_Y + START_HEIGHT && SubStrike.HEIGHT - Gdx.input.getAccelerometerY() > START_Y)
 		{
 		
 			if (Gdx.input.isTouched())
@@ -122,7 +122,8 @@ public class MenuState extends State
 		{
 			sb.draw(start, START_X, START_Y, START_WIDTH, START_HEIGHT);
 		}
-				
+		
+		/*
 		//Options button
 		sb.draw(options, OPTIONS_X, OPTIONS_Y, OPTIONS_WIDTH, OPTIONS_HEIGHT);
 		int optionsX = SubStrike.WIDTH / 2 - OPTIONS_WIDTH / 2;
@@ -139,11 +140,12 @@ public class MenuState extends State
 		{
 			sb.draw(options, OPTIONS_X, OPTIONS_Y, OPTIONS_WIDTH, OPTIONS_HEIGHT);
 		}
+		*/
 					
 		//How To Play Button
 		sb.draw(howToPlay, HOWTOPLAY_X, HOWTOPLAY_Y, HOWTOPLAY_WIDTH, HOWTOPLAY_HEIGHT);
 		int howToPlayX = SubStrike.WIDTH / 2 - HOWTOPLAY_WIDTH / 2;
-		if (Gdx.input.getX() < howToPlayX +  HOWTOPLAY_WIDTH && Gdx.input.getX() > howToPlayX &&  SubStrike.HEIGHT - Gdx.input.getY() < 306 +  HOWTOPLAY_WIDTH && SubStrike.HEIGHT - Gdx.input.getAccelerometerY() > 306)
+		if (Gdx.input.getX() < howToPlayX +  HOWTOPLAY_WIDTH && Gdx.input.getX() > howToPlayX &&  SubStrike.HEIGHT - Gdx.input.getY() < HOWTOPLAY_Y +  HOWTOPLAY_WIDTH && SubStrike.HEIGHT - Gdx.input.getAccelerometerY() > HOWTOPLAY_Y)
 {
 			
 			if (Gdx.input.isTouched())
@@ -160,7 +162,7 @@ public class MenuState extends State
 		//exit button	
 		sb.draw(exit,  EXIT_X, EXIT_Y, EXIT_WIDTH, EXIT_HEIGHT);
 		int exitX = SubStrike.WIDTH / 2 - EXIT_WIDTH / 2;
-		if (Gdx.input.getX() < exitX +  EXIT_WIDTH && Gdx.input.getX() > exitX &&  SubStrike.HEIGHT - Gdx.input.getY() < 306 +  EXIT_WIDTH && SubStrike.HEIGHT - Gdx.input.getAccelerometerY() > 306)
+		if (Gdx.input.getX() < exitX +  EXIT_WIDTH && Gdx.input.getX() > exitX &&  SubStrike.HEIGHT - Gdx.input.getY() < EXIT_Y +  EXIT_WIDTH && SubStrike.HEIGHT - Gdx.input.getAccelerometerY() > EXIT_Y)
 {
 			
 			if (Gdx.input.isTouched())
