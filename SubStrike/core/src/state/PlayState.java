@@ -37,6 +37,7 @@ public class PlayState extends State
     final int WIDTH = 7000;
     final int HEIGHT = 1080;
     private int renders = 0;
+    private boolean leftmouse = false;
 
     ArrayList<Fish> fishes = new ArrayList<Fish>();
 	ArrayList<Fish2> fishes2 = new ArrayList<Fish2>();
@@ -100,9 +101,15 @@ int fishrand = 0;
 		{
 			sub.jump();
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) 
+		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && leftmouse == false) 
 		{
 			torpedos.add(new Torpedo(sub.getPosition().x, sub.getPosition().y + 80));
+			leftmouse = true;
+		}
+
+		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) == false && leftmouse == true)
+		{
+			leftmouse = false;
 		}
 
 	}
