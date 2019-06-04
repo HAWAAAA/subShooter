@@ -21,7 +21,7 @@ public class SplashState extends State
 	@Override
 	public void handleInput()
 	{
-		if (time > 3)
+		if (time > 1.5)
 		{
 		gsm.set(new MenuState(gsm));
 		dispose();

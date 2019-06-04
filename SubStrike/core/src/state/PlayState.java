@@ -1,6 +1,7 @@
 package state;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.SubStrike;
 
 import sprites.Fish;
+import sprites.Missile;
 import sprites.Submarine;
 
 public class PlayState extends State
@@ -17,9 +19,13 @@ public class PlayState extends State
 	private Submarine sub;
 	private Texture background;
 	private Fish fish;
-	private TextureRegion imgTextureRegion;
     private int offset = 0;
     private int CamX = 0;
+    private final int SPEED = 300;
+
+    
+    private final int SUB_WIDTH = 281;
+    
 	public PlayState(GameStateManager gsm) 
 	{
 		super(gsm);
@@ -49,13 +55,14 @@ public class PlayState extends State
 		handleInput();
 		sub.update(dt);
 		CamX -= 10;
-	
+		
 	
 	}
 
 	@Override
 	public void render(SpriteBatch sb) 
 	{
+		
 		//sb.setProjectionMatrix(cam.combined); //where in the game world we are
 		sb.begin();
 		
@@ -63,12 +70,18 @@ public class PlayState extends State
 	   {
 	    offset += background.getWidth() - 1920;
 	    }
+	
+	if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT))
+	{
+		
+	}
 		
 		sb.draw(background, CamX  + offset ,0);
 
 		sb.draw(sub.getTexture(), sub.getPosition().x, sub.getPosition().y);
 		//sb.draw(fish.getFish1(), fish.getPosFish().x, fish.getFish1().y);
 		sb.end();
+		
 	}
 
 	@Override
