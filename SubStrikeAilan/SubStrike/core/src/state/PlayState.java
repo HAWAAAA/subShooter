@@ -160,9 +160,9 @@ public class PlayState extends State
 			for (int Tloops = 0; Tloops < torpedos.size(); Tloops++)
 			{
 				if ((torpedos.get(Tloops).getPosition().x >= fishes.get(loops).getPosition().x
-						&& torpedos.get(Tloops).getPosition().x <= fishes.get(loops).getPosition().x + fishes.get(loops).getFish1().getWidth())
+						&& torpedos.get(Tloops).getPosition().x <= fishes.get(loops).getPosition().x + fishes.get(loops).getFish().getRegionWidth())
 						&& (torpedos.get(Tloops).getPosition().y >= fishes.get(loops).getPosition().y
-								&& torpedos.get(Tloops).getPosition().y <= fishes.get(loops).getPosition().y + fishes.get(loops).getFish1().getHeight()))
+								&& torpedos.get(Tloops).getPosition().y <= fishes.get(loops).getPosition().y + fishes.get(loops).getFish().getRegionHeight()))
 				{
 					hit2.play(0.5f);
 					hitM.play(0.7f);
@@ -172,7 +172,7 @@ public class PlayState extends State
 					break;
 				}
 			}
-			if (removed == false && (fishes.get(loops).getPosition().x <= -fishes.get(loops).getFish1().getWidth()))
+			if (removed == false && (fishes.get(loops).getPosition().x <= -fishes.get(loops).getFish().getRegionWidth()))
 			{
 				fishes.remove(loops);
 			} else
@@ -189,9 +189,9 @@ public class PlayState extends State
 			for (int Tloops = 0; Tloops < torpedos.size(); Tloops++)
 			{
 				if ((torpedos.get(Tloops).getPosition().x >= fishes2.get(loops).getPosition().x
-						&& torpedos.get(Tloops).getPosition().x <= fishes2.get(loops).getPosition().x + fishes2.get(loops).getFish1().getWidth())
+						&& torpedos.get(Tloops).getPosition().x <= fishes2.get(loops).getPosition().x + fishes2.get(loops).getFish().getRegionWidth())
 						&& (torpedos.get(Tloops).getPosition().y >= fishes2.get(loops).getPosition().y
-								&& torpedos.get(Tloops).getPosition().y <= fishes2.get(loops).getPosition().y + fishes2.get(loops).getFish1().getHeight()))
+								&& torpedos.get(Tloops).getPosition().y <= fishes2.get(loops).getPosition().y + fishes2.get(loops).getFish().getRegionHeight()))
 				{
 					hit1.play(0.5f);
 					hitM.play(0.7f);
@@ -201,7 +201,7 @@ public class PlayState extends State
 					break;
 				}
 			}
-			if (removed == false && (fishes2.get(loops).getPosition().x <= -fishes2.get(loops).getFish1().getWidth()))
+			if (removed == false && (fishes2.get(loops).getPosition().x <= -fishes2.get(loops).getFish().getRegionWidth()))
 			{
 				fishes2.remove(loops);
 			} else
@@ -218,9 +218,9 @@ public class PlayState extends State
 			for (int Tloops = 0; Tloops < torpedos.size(); Tloops++)
 			{
 				if ((torpedos.get(Tloops).getPosition().x >= fishes3.get(loops).getPosition().x
-						&& torpedos.get(Tloops).getPosition().x <= fishes3.get(loops).getPosition().x + fishes3.get(loops).getFish1().getWidth())
+						&& torpedos.get(Tloops).getPosition().x <= fishes3.get(loops).getPosition().x + fishes3.get(loops).getFish().getRegionWidth())
 						&& (torpedos.get(Tloops).getPosition().y >= fishes3.get(loops).getPosition().y
-								&& torpedos.get(Tloops).getPosition().y <= fishes3.get(loops).getPosition().y + fishes3.get(loops).getFish1().getHeight()))
+								&& torpedos.get(Tloops).getPosition().y <= fishes3.get(loops).getPosition().y + fishes3.get(loops).getFish().getRegionHeight()))
 				{
 					hit2.play(0.5f);
 					hitM.play(0.7f);
@@ -230,7 +230,7 @@ public class PlayState extends State
 					break;
 				}
 			}
-			if (removed == false && (fishes3.get(loops).getPosition().x <= -fishes3.get(loops).getFish1().getWidth()))
+			if (removed == false && (fishes3.get(loops).getPosition().x <= -fishes3.get(loops).getFish().getRegionWidth()))
 			{
 				fishes3.remove(loops);
 			} else
@@ -247,9 +247,9 @@ public class PlayState extends State
 			for (int Tloops = 0; Tloops < torpedos.size(); Tloops++)
 			{
 				if ((torpedos.get(Tloops).getPosition().x >= fishes4.get(loops).getPosition().x
-						&& torpedos.get(Tloops).getPosition().x <= fishes4.get(loops).getPosition().x + fishes4.get(loops).getFish1().getWidth())
+						&& torpedos.get(Tloops).getPosition().x <= fishes4.get(loops).getPosition().x + fishes4.get(loops).getFish().getRegionWidth())
 						&& (torpedos.get(Tloops).getPosition().y >= fishes4.get(loops).getPosition().y
-								&& torpedos.get(Tloops).getPosition().y <= fishes4.get(loops).getPosition().y + fishes4.get(loops).getFish1().getHeight()))
+								&& torpedos.get(Tloops).getPosition().y <= fishes4.get(loops).getPosition().y + fishes4.get(loops).getFish().getRegionHeight()))
 				{
 					hit1.play(0.5f);
 					hitM.play(0.7f);
@@ -259,7 +259,7 @@ public class PlayState extends State
 					break;
 				}
 			}
-			if (removed == false && (fishes4.get(loops).getPosition().x <= -fishes4.get(loops).getFish1().getWidth()))
+			if (removed == false && (fishes4.get(loops).getPosition().x <= -fishes4.get(loops).getFish().getRegionWidth()))
 			{
 				fishes4.remove(loops);
 			} else
@@ -317,19 +317,19 @@ public class PlayState extends State
 
 		for (int loops = 0; loops < fishes.size(); loops++)
 		{
-			sb.draw(fishes.get(loops).getFish1(), fishes.get(loops).getPosition().x, fishes.get(loops).getPosition().y);
+			sb.draw(fishes.get(loops).getFish(), fishes.get(loops).getPosition().x, fishes.get(loops).getPosition().y);
 		}
 		for (int loops = 0; loops < fishes2.size(); loops++)
 		{
-			sb.draw(fishes2.get(loops).getFish1(), fishes2.get(loops).getPosition().x, fishes2.get(loops).getPosition().y);
+			sb.draw(fishes2.get(loops).getFish(), fishes2.get(loops).getPosition().x, fishes2.get(loops).getPosition().y);
 		}
 		for (int loops = 0; loops < fishes3.size(); loops++)
 		{
-			sb.draw(fishes3.get(loops).getFish1(), fishes3.get(loops).getPosition().x, fishes3.get(loops).getPosition().y);
+			sb.draw(fishes3.get(loops).getFish(), fishes3.get(loops).getPosition().x, fishes3.get(loops).getPosition().y);
 		}
 		for (int loops = 0; loops < fishes4.size(); loops++)
 		{
-			sb.draw(fishes4.get(loops).getFish1(), fishes4.get(loops).getPosition().x, fishes4.get(loops).getPosition().y);
+			sb.draw(fishes4.get(loops).getFish(), fishes4.get(loops).getPosition().x, fishes4.get(loops).getPosition().y);
 		}
 
 		renders++;
