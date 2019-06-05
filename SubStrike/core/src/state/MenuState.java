@@ -77,7 +77,6 @@ public class MenuState extends State
 		playButton.addListener(new EventListener())
 	    {
 	       
-
 			@Override
 			public boolean handle(new EventListener)) 
 			{
