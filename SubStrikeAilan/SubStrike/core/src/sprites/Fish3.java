@@ -13,7 +13,7 @@ public class Fish3
 	private Texture fish3;
 	private Vector2 posFish1;
 
-	private static final int MOVEMENT = -400;
+	private static final int MOVEMENT = -500;
 	private Vector3 position;
 	private Vector3 velocity;
 	private Animation fishA;

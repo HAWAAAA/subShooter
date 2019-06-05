@@ -16,6 +16,7 @@ import sprites.Submarine;
 import sprites.Fish2;
 import sprites.Fish3;
 import sprites.Fish4;
+import sprites.Fish5;
 import sprites.Torpedo;
 
 public class PlayState extends State
@@ -41,13 +42,23 @@ public class PlayState extends State
 	private Sound hit1;
 	private Sound hit2;
 	private Sound hitM;
+	private Sound hurt;
 	private Music music;
 
 	ArrayList<Fish> fishes = new ArrayList<Fish>();
 	ArrayList<Fish2> fishes2 = new ArrayList<Fish2>();
 	ArrayList<Fish3> fishes3 = new ArrayList<Fish3>();
 	ArrayList<Fish4> fishes4 = new ArrayList<Fish4>();
+	ArrayList<Fish5> fishes5 = new ArrayList<Fish5>();
 	ArrayList<Torpedo> torpedos = new ArrayList<Torpedo>();
+
+	// health bar
+	private Texture fullHealth;
+	private Texture health75;
+	private Texture health50;
+	private Texture health25;
+	private Texture health0;
+	private int health = 4;
 
 	public PlayState(GameStateManager gsm)
 	{
@@ -68,22 +79,31 @@ public class PlayState extends State
 		hit2 = Gdx.audio.newSound(Gdx.files.internal("hit2.mp3"));
 
 		hitM = Gdx.audio.newSound(Gdx.files.internal("hitM.mp3"));
-
+		
+		hurt = Gdx.audio.newSound(Gdx.files.internal("hurt.mp3"));
+		
 		music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
 		music.setLooping(true);
 		music.setVolume(1f);
 		music.play();
+
+		// health bar
+		fullHealth = new Texture("100.png");
+		health75 = new Texture("75.png");
+		health50 = new Texture("50.png");
+		health25 = new Texture("25.png");
+		health0 = new Texture("0.png");
 
 	}
 
 	public void fishies()
 	{
 		int fishrand = 0;
-		int rand = 1 + (int) (Math.random() * 4);
+		int rand = 1 + (int) (Math.random() * 5);
 		System.out.println(rand);
 		for (int loops = 0; loops < rand; loops++)
 		{
-			fishrand = 1 + (int) (Math.random() * 4);
+			fishrand = 1 + (int) (Math.random() * 5);
 
 			if (fishrand == 1)
 			{
@@ -105,6 +125,12 @@ public class PlayState extends State
 							int randX = 1800 + (int) (Math.random() * 500);
 							fishes4.add(new Fish4(randX));
 						}
+						else
+							if (fishrand == 5)
+							{
+								int randX = 1800 + (int) (Math.random() * 500);
+								fishes5.add(new Fish5(randX));
+							}
 		}
 
 	}
@@ -154,9 +180,23 @@ public class PlayState extends State
 		CamX -= 5;
 		CamX1 -= 0.7;
 
+		// fish 1
 		for (int loops = 0; loops < fishes.size(); loops++)
 		{
 			Boolean removed = false;
+			if ((sub.getPosition().x + 320 >= fishes.get(loops).getPosition().x
+					&& (((sub.getPosition().y >= fishes.get(loops).getPosition().y - 40 && sub.getPosition().y <= fishes.get(loops).getPosition().y)))))
+			{
+
+				fishes.remove(loops);
+				// System.out.println("fuck");
+				hitM.play(0.7f);
+				hurt.play(1f);
+				health -= 1;
+				removed = true;
+				break;
+			}
+
 			for (int Tloops = 0; Tloops < torpedos.size(); Tloops++)
 			{
 				if ((torpedos.get(Tloops).getPosition().x >= fishes.get(loops).getPosition().x
@@ -183,9 +223,22 @@ public class PlayState extends State
 
 		}
 
+		// fish 2
 		for (int loops = 0; loops < fishes2.size(); loops++)
 		{
 			Boolean removed = false;
+			if ((sub.getPosition().x + 320 >= fishes2.get(loops).getPosition().x
+					&& (((sub.getPosition().y >= fishes2.get(loops).getPosition().y - 40 && sub.getPosition().y <= fishes2.get(loops).getPosition().y)))))
+			{
+				fishes2.remove(loops);
+				hitM.play(0.7f);
+				hurt.play(1f);
+				// System.out.println("fuck");
+				health -= 1;
+				removed = true;
+				break;
+			}
+
 			for (int Tloops = 0; Tloops < torpedos.size(); Tloops++)
 			{
 				if ((torpedos.get(Tloops).getPosition().x >= fishes2.get(loops).getPosition().x
@@ -212,9 +265,22 @@ public class PlayState extends State
 
 		}
 
+		// fish 3
 		for (int loops = 0; loops < fishes3.size(); loops++)
 		{
 			Boolean removed = false;
+			if ((sub.getPosition().x + 320 >= fishes3.get(loops).getPosition().x
+					&& (((sub.getPosition().y >= fishes3.get(loops).getPosition().y - 40 && sub.getPosition().y <= fishes3.get(loops).getPosition().y)))))
+			{
+				fishes3.remove(loops);
+				hitM.play(0.7f);
+				hurt.play(1f);
+				// System.out.println("fuck");
+				health -= 1;
+				removed = true;
+				break;
+			}
+
 			for (int Tloops = 0; Tloops < torpedos.size(); Tloops++)
 			{
 				if ((torpedos.get(Tloops).getPosition().x >= fishes3.get(loops).getPosition().x
@@ -241,9 +307,21 @@ public class PlayState extends State
 
 		}
 
+		// fish 4
 		for (int loops = 0; loops < fishes4.size(); loops++)
 		{
 			Boolean removed = false;
+			if ((sub.getPosition().x + 320 >= fishes4.get(loops).getPosition().x
+					&& (((sub.getPosition().y >= fishes4.get(loops).getPosition().y - 40 && sub.getPosition().y <= fishes4.get(loops).getPosition().y)))))
+			{
+				fishes4.remove(loops);
+				hitM.play(0.7f);
+				hurt.play(1f);
+				// System.out.println("fuck");
+				health -= 1;
+				removed = true;
+				break;
+			}
 			for (int Tloops = 0; Tloops < torpedos.size(); Tloops++)
 			{
 				if ((torpedos.get(Tloops).getPosition().x >= fishes4.get(loops).getPosition().x
@@ -284,6 +362,37 @@ public class PlayState extends State
 			}
 
 		}
+		
+		//fish 5
+		for (int loops = 0; loops < fishes5.size(); loops++)
+		{
+			Boolean removed = false;
+			for (int Tloops = 0; Tloops < torpedos.size(); Tloops++)
+			{
+				if ((torpedos.get(Tloops).getPosition().x >= fishes5.get(loops).getPosition().x
+						&& torpedos.get(Tloops).getPosition().x <= fishes5.get(loops).getPosition().x + fishes5.get(loops).getFish().getRegionWidth())
+						&& (torpedos.get(Tloops).getPosition().y >= fishes5.get(loops).getPosition().y
+								&& torpedos.get(Tloops).getPosition().y <= fishes5.get(loops).getPosition().y + fishes5.get(loops).getFish().getRegionHeight()))
+				{
+					hit2.play(0.5f);
+					hitM.play(0.7f);
+					torpedos.remove(Tloops);
+					fishes5.remove(loops);
+					health -= 1;
+					removed = true;
+					break;
+				}
+			}
+			if (removed == false && (fishes5.get(loops).getPosition().x <= -fishes5.get(loops).getFish().getRegionWidth()))
+			{
+				fishes5.remove(loops);
+			} else
+				if (removed == false)
+				{
+					fishes5.get(loops).update(dt);
+				}
+
+		}
 
 	}
 
@@ -300,7 +409,40 @@ public class PlayState extends State
 		sb.draw(backgroundclouds, 0, 0, WIDTH, HEIGHT, (int) sourceX1, 0, background.getWidth(), background.getHeight(), false, false);
 		sb.draw(background, 0, 0, WIDTH, HEIGHT, (int) sourceX, 0, background.getWidth(), background.getHeight(), false, false);
 		sb.draw(sun, CamX1 + offset, 0);
-		sb.draw(hearts, 40, 900);
+
+		// health bar
+		if (health == 4)
+		{
+			sb.draw(fullHealth, 75, 975, fullHealth.getWidth(), fullHealth.getHeight());
+		}
+
+		if (health == 3)
+		{
+			// dispose();
+			sb.draw(health75, 75, 975, fullHealth.getWidth(), fullHealth.getHeight());
+		}
+
+		if (health == 2)
+		{
+			// dispose();
+			sb.draw(health50, 75, 975, fullHealth.getWidth(), fullHealth.getHeight());
+		}
+
+		if (health == 1)
+		{
+			// dispose();
+			sb.draw(health25, 75, 975, fullHealth.getWidth(), fullHealth.getHeight());
+		}
+
+		if (health == 0)
+		{
+			// dispose();
+			gsm.set(new DeathState(gsm));
+
+			sb.draw(health0, 60, 950, fullHealth.getWidth(), fullHealth.getHeight());
+			gsm.set(new DeathState(gsm));
+
+		}
 
 		if (renders == 120)
 		{
@@ -330,6 +472,10 @@ public class PlayState extends State
 		for (int loops = 0; loops < fishes4.size(); loops++)
 		{
 			sb.draw(fishes4.get(loops).getFish(), fishes4.get(loops).getPosition().x, fishes4.get(loops).getPosition().y);
+		}
+		for (int loops = 0; loops < fishes5.size(); loops++)
+		{
+			sb.draw(fishes5.get(loops).getFish(), fishes5.get(loops).getPosition().x, fishes5.get(loops).getPosition().y);
 		}
 
 		renders++;

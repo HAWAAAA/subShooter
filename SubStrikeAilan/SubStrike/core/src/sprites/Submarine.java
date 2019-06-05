@@ -23,7 +23,7 @@ public class Submarine
 	private Music waves;
 	private boolean above = false;
 
-	public Submarine(int x, int y)
+	public Submarine(float x, float y)
 	{
 		position = new Vector3(x, y, 0);
 		velocity = new Vector3(0, 0, 0);
