@@ -18,6 +18,7 @@ import sprites.Fish3;
 import sprites.Fish4;
 import sprites.Fish5;
 import sprites.Torpedo;
+import sprites.Medkit;
 
 public class PlayState extends State
 {
@@ -50,6 +51,7 @@ public class PlayState extends State
 	ArrayList<Fish3> fishes3 = new ArrayList<Fish3>();
 	ArrayList<Fish4> fishes4 = new ArrayList<Fish4>();
 	ArrayList<Fish5> fishes5 = new ArrayList<Fish5>();
+	ArrayList<Medkit> medkit = new ArrayList<Medkit>();
 	ArrayList<Torpedo> torpedos = new ArrayList<Torpedo>();
 
 	// health bar
@@ -100,6 +102,7 @@ public class PlayState extends State
 	{
 		int fishrand = 0;
 		int rand = 1 + (int) (Math.random() * 5);
+		int newrand = 1 + (int) (Math.random() * 5);
 		System.out.println(rand);
 		for (int loops = 0; loops < rand; loops++)
 		{
@@ -124,13 +127,20 @@ public class PlayState extends State
 						{
 							int randX = 1800 + (int) (Math.random() * 500);
 							fishes4.add(new Fish4(randX));
+						}else
+							 
+							if (newrand == 5)
+						{
+							int randX = 1800 + (int) (Math.random() * 500);
+							fishes5.add(new Fish5(randX));
+						}else
+							 
+							if (newrand == 2 || newrand == 4)
+						{
+							int randX = 1800 + (int) (Math.random() * 500);
+							medkit.add(new Medkit(randX));
 						}
-						else
-							if (fishrand == 5)
-							{
-								int randX = 1800 + (int) (Math.random() * 500);
-								fishes5.add(new Fish5(randX));
-							}
+					 
 		}
 
 	}
@@ -393,6 +403,35 @@ public class PlayState extends State
 				}
 
 		}
+		//medkit
+		for (int loops = 0; loops < medkit.size(); loops++)
+		{
+			Boolean removed = false;
+			if ((sub.getPosition().x + 320 >= medkit.get(loops).getPosition().x
+					&& (((sub.getPosition().y >= medkit.get(loops).getPosition().y - 40 && sub.getPosition().y <= medkit.get(loops).getPosition().y)))))
+			{
+				if (health < 4)
+				medkit.remove(loops);
+							// System.out.println("fuck");
+				health += 1;
+				removed = true;
+				break;
+		
+			}
+			else {
+				
+			}
+		
+			if (removed == false && (medkit.get(loops).getPosition().x <= -medkit.get(loops).getFish().getRegionWidth()))
+			{
+				medkit.remove(loops);
+			} else
+				if (removed == false)
+				{
+					medkit.get(loops).update(dt);
+				}
+
+		}
 
 	}
 
@@ -411,11 +450,15 @@ public class PlayState extends State
 		sb.draw(sun, CamX1 + offset, 0);
 
 		// health bar
+		if (health >= 4)
+		{
+			health = 4;
+		}
 		if (health == 4)
 		{
 			sb.draw(fullHealth, 75, 975, fullHealth.getWidth(), fullHealth.getHeight());
 		}
-
+		
 		if (health == 3)
 		{
 			// dispose();
@@ -437,10 +480,10 @@ public class PlayState extends State
 		if (health == 0)
 		{
 			// dispose();
-			gsm.set(new DeathState(gsm));
+			gsm.set(new MenuState(gsm));
 
 			sb.draw(health0, 60, 950, fullHealth.getWidth(), fullHealth.getHeight());
-			gsm.set(new DeathState(gsm));
+	
 
 		}
 
@@ -477,7 +520,10 @@ public class PlayState extends State
 		{
 			sb.draw(fishes5.get(loops).getFish(), fishes5.get(loops).getPosition().x, fishes5.get(loops).getPosition().y);
 		}
-
+		for (int loops = 0; loops < medkit.size(); loops++)
+		{
+			sb.draw(medkit.get(loops).getFish(), medkit.get(loops).getPosition().x, medkit.get(loops).getPosition().y);
+		}
 		renders++;
 		sb.end();
 	}
