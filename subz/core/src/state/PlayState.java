@@ -66,6 +66,7 @@ public class PlayState extends State
 	private double time = 0;
 	private double score = 0;
 	private double fishtime = 0;
+	   float newspeed = 0;
 	BitmapFont scoreText;
 	BitmapFont HighscoreText;
 	Preferences prefs = Gdx.app.getPreferences("My Preferences");
@@ -194,7 +195,7 @@ HighscoreText.getData().setScale(2, 2);
 		sub.update(dt);
 		CamX -= 5;
 		CamX1 -= 0.7;
-        speed+= 0.01;
+     
 		//fish 1
 		for (int loops = 0; loops < fishes.size(); loops++)
 		{
@@ -230,7 +231,7 @@ HighscoreText.getData().setScale(2, 2);
 			} else
 				if (removed == false)
 				{
-					fishes.get(loops).update(dt, speed);
+					fishes.get(loops).update(dt, newspeed);
 				}
 
 		}
@@ -271,7 +272,7 @@ HighscoreText.getData().setScale(2, 2);
 			} else
 				if (removed == false)
 				{
-					fishes2.get(loops).update(dt, speed);
+					fishes2.get(loops).update(dt, newspeed);
 				}
 
 		}
@@ -311,7 +312,7 @@ HighscoreText.getData().setScale(2, 2);
 			} else
 				if (removed == false)
 				{
-					fishes3.get(loops).update(dt, speed);
+					fishes3.get(loops).update(dt, newspeed);
 				}
 
 		}
@@ -350,7 +351,7 @@ HighscoreText.getData().setScale(2, 2);
 			} else
 				if (removed == false)
 				{
-					fishes4.get(loops).update(dt, speed);
+					fishes4.get(loops).update(dt, newspeed);
 				}
 
 		}
@@ -365,7 +366,7 @@ HighscoreText.getData().setScale(2, 2);
 				torpedos.remove(loops);
 			} else
 			{
-				torpedos.get(loops).update(dt, speed);
+				torpedos.get(loops).update(dt, newspeed);
 			}
 
 		}
@@ -397,7 +398,7 @@ HighscoreText.getData().setScale(2, 2);
 			} else
 				if (removed == false)
 				{
-					fishes5.get(loops).update(dt, speed);
+					fishes5.get(loops).update(dt, newspeed);
 				}
 
 		}
@@ -407,6 +408,9 @@ HighscoreText.getData().setScale(2, 2);
 	@Override
 	public void render(SpriteBatch sb)
 	{
+		float before = sourceX;
+		
+		speed+=  0.01;
 		time +=  Gdx.graphics.getDeltaTime();
 	    score += Gdx.graphics.getDeltaTime();
 	    fishtime +=  Gdx.graphics.getDeltaTime();
@@ -414,16 +418,16 @@ HighscoreText.getData().setScale(2, 2);
 		System.out.println("score = " + score);
 
 
-		sourceX += 5 ;
-		sourceX1 += 1 ;
+		sourceX += 5 + speed;
+		sourceX1 += 1 + speed;
 		
 
 	 
 		sb.setProjectionMatrix(cam.combined);
 		sb.begin();
-		sourceX = (sourceX + Gdx.graphics.getDeltaTime() / 3 / 4) % background.getWidth();
-		sourceX1 = (sourceX1 + Gdx.graphics.getDeltaTime() / 3 / 4) % background.getWidth();
-		
+		sourceX = ((sourceX + Gdx.graphics.getDeltaTime() / 3 / 4) % background.getWidth());
+		sourceX1 = ((sourceX1 + Gdx.graphics.getDeltaTime() / 3 / 4) % background.getWidth());
+newspeed = (sourceX - before)/ Gdx.graphics.getDeltaTime(); 
 
 		sb.draw(backgroundclouds, 0, 0, WIDTH, HEIGHT, (int) sourceX1, 0, background.getWidth(), background.getHeight(), false, false);
 		sb.draw(background, 0, 0, WIDTH, HEIGHT, (int) sourceX, 0, background.getWidth(), background.getHeight(), false, false);
@@ -477,7 +481,7 @@ HighscoreText.getData().setScale(2, 2);
 				}
 				
 System.out.println("fishtime = " + fishtime);
-		if (fishtime >= 2 - ( speed  * .03))
+		if (fishtime >= 2 - ( speed  * .01))
 		{
 			fishies();
 			fishtime = 0;
