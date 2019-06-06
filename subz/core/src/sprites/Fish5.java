@@ -21,7 +21,7 @@ public class Fish5
 
 	public Fish5(float x, float speed)
 	{
-		MOVEMENT = MOVEMENT - speed;
+		MOVEMENT = (300  - speed ) -350;
 		int rand = (int) (Math.random() * 690);
 
 		texture = new Texture("Fish5A.png");
@@ -34,7 +34,7 @@ public class Fish5
 
 	public void update(float dt, float speed)
 	{
-		MOVEMENT = MOVEMENT - speed;
+		MOVEMENT = (300  - speed ) -350;
 		fishA.update(dt);
 		velocity.add(0, position.y, 0);
 		velocity.scl(dt);

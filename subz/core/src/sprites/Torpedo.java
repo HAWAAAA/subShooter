@@ -15,7 +15,7 @@ public class Torpedo
 
 	public Torpedo(float x, float y , float speed)
 	{
-		MOVEMENT = MOVEMENT  + speed ;
+		MOVEMENT = -(300  - speed ) + 800;
 		TorpedoText = new Texture("Torpedo.png");
 
 		position = new Vector3(x, y, 0);
@@ -37,7 +37,7 @@ public class Torpedo
 
 	public void update(float dt , float speed)
 	{
-		MOVEMENT = MOVEMENT + speed ;
+		MOVEMENT = -(300  - speed ) + 800;
 		velocity.add(0, position.y, 0);
 		velocity.scl(dt);
 		position.add(MOVEMENT * dt, 0, 0);
