@@ -7,25 +7,24 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.Random;
 
-public class Fish4
+public class Fish5
 {
 
-	private Texture fish4;
+	private Texture fish5;
 	private Vector2 posFish1;
 
-	private float MOVEMENT = -550;
+	private  float MOVEMENT = -350;
 	private Vector3 position;
 	private Vector3 velocity;
 	private Animation fishA;
 	private Texture texture;
 
-	public Fish4(float x, float speed)
+	public Fish5(float x, float speed)
 	{
-		MOVEMENT = MOVEMENT - speed ;
-		fish4 = new Texture("fish4A.png");
+		MOVEMENT = MOVEMENT - speed;
 		int rand = (int) (Math.random() * 690);
 
-		texture = new Texture("fish4A.png");
+		texture = new Texture("Fish5A.png");
 		fishA = new Animation(new TextureRegion(texture), 4, 0.2f);
 
 		position = new Vector3(x, rand, 0);
@@ -33,9 +32,9 @@ public class Fish4
 
 	}
 
-	public void update(float dt , float speed)
-	{ 
-		MOVEMENT = MOVEMENT - speed ;
+	public void update(float dt, float speed)
+	{
+		MOVEMENT = MOVEMENT - speed;
 		fishA.update(dt);
 		velocity.add(0, position.y, 0);
 		velocity.scl(dt);
