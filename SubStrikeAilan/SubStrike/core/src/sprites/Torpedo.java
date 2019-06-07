@@ -15,6 +15,8 @@ public class Torpedo
 
 	public Torpedo(float x, float y)
 	{
+		
+		
 		TorpedoText = new Texture("Torpedo.png");
 
 		position = new Vector3(x, y, 0);

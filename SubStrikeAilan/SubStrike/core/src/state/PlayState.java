@@ -3,11 +3,15 @@ package state;
 import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.mygdx.game.SubStrike;
 import static com.badlogic.gdx.graphics.Texture.TextureWrap.Repeat;
 
@@ -44,14 +48,21 @@ public class PlayState extends State
 	private Sound hit2;
 	private Sound hitM;
 	private Sound hurt;
+	private Sound minion1;
+	private Sound minion2;
+	private Sound healthregain;
 	private Music music;
-
+	private FreeTypeFontGenerator fontGenerator;
+	private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+	BitmapFont font;
+	
+	
 	ArrayList<Fish> fishes = new ArrayList<Fish>();
 	ArrayList<Fish2> fishes2 = new ArrayList<Fish2>();
 	ArrayList<Fish3> fishes3 = new ArrayList<Fish3>();
 	ArrayList<Fish4> fishes4 = new ArrayList<Fish4>();
 	ArrayList<Fish5> fishes5 = new ArrayList<Fish5>();
-	ArrayList<Medkit> medkit = new ArrayList<Medkit>();
+	ArrayList<Medkit> medkit1 = new ArrayList<Medkit>();
 	ArrayList<Torpedo> torpedos = new ArrayList<Torpedo>();
 
 	// health bar
@@ -61,6 +72,16 @@ public class PlayState extends State
 	private Texture health25;
 	private Texture health0;
 	private int health = 4;
+
+	private float speed = 0;
+	private float increment = 0;
+	private double time = 0;
+	private double score = 0;
+	private double fishtime = 0;
+	float newspeed = 0;
+	BitmapFont scoreText;
+	BitmapFont HighscoreText;
+	Preferences prefs = Gdx.app.getPreferences("My Preferences");
 
 	public PlayState(GameStateManager gsm)
 	{
@@ -81,9 +102,13 @@ public class PlayState extends State
 		hit2 = Gdx.audio.newSound(Gdx.files.internal("hit2.mp3"));
 
 		hitM = Gdx.audio.newSound(Gdx.files.internal("hitM.mp3"));
-		
+
 		hurt = Gdx.audio.newSound(Gdx.files.internal("hurt.mp3"));
-		
+		healthregain = Gdx.audio.newSound(Gdx.files.internal("healthregain.mp3"));
+
+		minion1 = Gdx.audio.newSound(Gdx.files.internal("minion1.mp3"));
+		minion2 = Gdx.audio.newSound(Gdx.files.internal("minion2.mp3"));
+
 		music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
 		music.setLooping(true);
 		music.setVolume(1f);
@@ -96,18 +121,35 @@ public class PlayState extends State
 		health25 = new Texture("25.png");
 		health0 = new Texture("0.png");
 
+		scoreText = new BitmapFont();
+		scoreText.getData().setScale(2, 2);
+
+		HighscoreText = new BitmapFont();
+		HighscoreText.setColor(Color.BLACK);
+		HighscoreText.getData().setScale(2, 2);
+
+		fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("kongtext.ttf"));
+		fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		fontParameter.size = 35;
+		
+		fontParameter.color = Color.BLACK;
+		font = fontGenerator.generateFont(fontParameter);
 	}
 
 	public void fishies()
 	{
 		int fishrand = 0;
+		int powerRand = 0;
+		int fish5rand = 0;
 		int rand = 1 + (int) (Math.random() * 5);
-		int newrand = 1 + (int) (Math.random() * 5);
-		System.out.println(rand);
+		// System.out.println(rand);
 		for (int loops = 0; loops < rand; loops++)
 		{
 			fishrand = 1 + (int) (Math.random() * 5);
+			fish5rand = 1 + (int) (Math.random() * 5);
+			powerRand = 1 + (int) (Math.random() * 10);
 
+			// System.out.println(fish5rand);
 			if (fishrand == 1)
 			{
 				int randX = 1800 + (int) (Math.random() * 500);
@@ -127,20 +169,18 @@ public class PlayState extends State
 						{
 							int randX = 1800 + (int) (Math.random() * 500);
 							fishes4.add(new Fish4(randX));
-						}else
-							 
-							if (newrand == 5)
-						{
-							int randX = 1800 + (int) (Math.random() * 500);
-							fishes5.add(new Fish5(randX));
-						}else
-							 
-							if (newrand == 2 || newrand == 4)
-						{
-							int randX = 1800 + (int) (Math.random() * 500);
-							medkit.add(new Medkit(randX));
 						}
-					 
+
+			if (fish5rand == 5)
+			{
+				int randX = 1800 + (int) (Math.random() * 500);
+				fishes5.add(new Fish5(randX));
+			}
+			if (powerRand == 5)
+			{
+				int randX = 1800 + (int) (Math.random() * 500);
+				medkit1.add(new Medkit(randX));
+			}
 		}
 
 	}
@@ -197,11 +237,9 @@ public class PlayState extends State
 			if ((sub.getPosition().x + 320 >= fishes.get(loops).getPosition().x
 					&& (((sub.getPosition().y >= fishes.get(loops).getPosition().y - 40 && sub.getPosition().y <= fishes.get(loops).getPosition().y)))))
 			{
-
 				fishes.remove(loops);
+				hurt.play(0.7f);
 				// System.out.println("fuck");
-				hitM.play(0.7f);
-				hurt.play(1f);
 				health -= 1;
 				removed = true;
 				break;
@@ -219,6 +257,7 @@ public class PlayState extends State
 					torpedos.remove(Tloops);
 					fishes.remove(loops);
 					removed = true;
+					score += 10;
 					break;
 				}
 			}
@@ -241,8 +280,7 @@ public class PlayState extends State
 					&& (((sub.getPosition().y >= fishes2.get(loops).getPosition().y - 40 && sub.getPosition().y <= fishes2.get(loops).getPosition().y)))))
 			{
 				fishes2.remove(loops);
-				hitM.play(0.7f);
-				hurt.play(1f);
+				hurt.play(0.7f);
 				// System.out.println("fuck");
 				health -= 1;
 				removed = true;
@@ -261,6 +299,7 @@ public class PlayState extends State
 					torpedos.remove(Tloops);
 					fishes2.remove(loops);
 					removed = true;
+					score += 10;
 					break;
 				}
 			}
@@ -283,8 +322,7 @@ public class PlayState extends State
 					&& (((sub.getPosition().y >= fishes3.get(loops).getPosition().y - 40 && sub.getPosition().y <= fishes3.get(loops).getPosition().y)))))
 			{
 				fishes3.remove(loops);
-				hitM.play(0.7f);
-				hurt.play(1f);
+				hurt.play(0.7f);
 				// System.out.println("fuck");
 				health -= 1;
 				removed = true;
@@ -303,6 +341,7 @@ public class PlayState extends State
 					torpedos.remove(Tloops);
 					fishes3.remove(loops);
 					removed = true;
+					score += 10;
 					break;
 				}
 			}
@@ -325,8 +364,7 @@ public class PlayState extends State
 					&& (((sub.getPosition().y >= fishes4.get(loops).getPosition().y - 40 && sub.getPosition().y <= fishes4.get(loops).getPosition().y)))))
 			{
 				fishes4.remove(loops);
-				hitM.play(0.7f);
-				hurt.play(1f);
+				hurt.play(0.7f);
 				// System.out.println("fuck");
 				health -= 1;
 				removed = true;
@@ -344,6 +382,7 @@ public class PlayState extends State
 					torpedos.remove(Tloops);
 					fishes4.remove(loops);
 					removed = true;
+					score += 10;
 					break;
 				}
 			}
@@ -372,8 +411,9 @@ public class PlayState extends State
 			}
 
 		}
-		
-		//fish 5
+
+		// fish 5
+		int minionRand;
 		for (int loops = 0; loops < fishes5.size(); loops++)
 		{
 			Boolean removed = false;
@@ -386,6 +426,12 @@ public class PlayState extends State
 				{
 					hit2.play(0.5f);
 					hitM.play(0.7f);
+					minionRand = 1 + (int) (Math.random() * 2);
+						if(minionRand == 1) {
+							minion1.play(0.6f);
+						}else if(minionRand == 2) {
+							minion2.play(0.6f);
+						}
 					torpedos.remove(Tloops);
 					fishes5.remove(loops);
 					health -= 1;
@@ -403,32 +449,31 @@ public class PlayState extends State
 				}
 
 		}
-		//medkit
-		for (int loops = 0; loops < medkit.size(); loops++)
+
+		// medkit
+		for (int loops = 0; loops < medkit1.size(); loops++)
 		{
 			Boolean removed = false;
-			if ((sub.getPosition().x + 320 >= medkit.get(loops).getPosition().x
-					&& (((sub.getPosition().y >= medkit.get(loops).getPosition().y - 40 && sub.getPosition().y <= medkit.get(loops).getPosition().y)))))
+			if ((sub.getPosition().x + 320 >= medkit1.get(loops).getPos().x && (((sub.getPosition().y >= medkit1.get(loops).getPos().y - 40 && sub.getPosition().y <= medkit1.get(loops).getPos().y)))))
 			{
 				if (health < 4)
-				medkit.remove(loops);
-							// System.out.println("fuck");
-				health += 1;
-				removed = true;
-				break;
-		
+				{
+					medkit1.remove(loops);
+					healthregain.play();
+
+					health += 1;
+					removed = true;
+					break;
+				}
 			}
-			else {
-				
-			}
-		
-			if (removed == false && (medkit.get(loops).getPosition().x <= -medkit.get(loops).getFish().getRegionWidth()))
+
+			if (removed == false && (medkit1.get(loops).getPos().x <= -medkit1.get(loops).getFish().getRegionWidth()))
 			{
-				medkit.remove(loops);
+				medkit1.remove(loops);
 			} else
 				if (removed == false)
 				{
-					medkit.get(loops).update(dt);
+					medkit1.get(loops).update(dt);
 				}
 
 		}
@@ -438,6 +483,14 @@ public class PlayState extends State
 	@Override
 	public void render(SpriteBatch sb)
 	{
+		float before = sourceX;
+
+		speed += 0.01;
+		time += Gdx.graphics.getDeltaTime();
+		score += Gdx.graphics.getDeltaTime();
+		fishtime += Gdx.graphics.getDeltaTime();
+		System.out.println("time = " + time);
+		System.out.println("score = " + score);
 		sourceX += 5;
 		sourceX1 += 1;
 		sb.setProjectionMatrix(cam.combined);
@@ -450,15 +503,17 @@ public class PlayState extends State
 		sb.draw(sun, CamX1 + offset, 0);
 
 		// health bar
+
 		if (health >= 4)
 		{
 			health = 4;
+
 		}
 		if (health == 4)
 		{
 			sb.draw(fullHealth, 75, 975, fullHealth.getWidth(), fullHealth.getHeight());
 		}
-		
+
 		if (health == 3)
 		{
 			// dispose();
@@ -481,9 +536,26 @@ public class PlayState extends State
 		{
 			// dispose();
 			gsm.set(new MenuState(gsm));
+			music.stop();
+			sub.stopSounds();
 
 			sb.draw(health0, 60, 950, fullHealth.getWidth(), fullHealth.getHeight());
-	
+
+			health = 4;
+
+			if (prefs.contains("HIGHSCORE") == false)
+			{
+
+				prefs.putInteger("HIGHSCORE", (int) score);
+				prefs.flush();
+			} else
+				if (prefs.getInteger("HIGHSCORE") < score)
+				{
+
+					prefs.putInteger("HIGHSCORE", (int) score);
+					prefs.flush();
+					System.out.println("Save: " + prefs.getInteger("HIGHSCORE"));
+				}
 
 		}
 
@@ -520,10 +592,19 @@ public class PlayState extends State
 		{
 			sb.draw(fishes5.get(loops).getFish(), fishes5.get(loops).getPosition().x, fishes5.get(loops).getPosition().y);
 		}
-		for (int loops = 0; loops < medkit.size(); loops++)
+		for (int loops = 0; loops < medkit1.size(); loops++)
 		{
-			sb.draw(medkit.get(loops).getFish(), medkit.get(loops).getPosition().x, medkit.get(loops).getPosition().y);
+			sb.draw(medkit1.get(loops).getFish(), medkit1.get(loops).getPos().x, medkit1.get(loops).getPos().y);
 		}
+		font.draw(sb, "SCORE: " + (int) score, 1400, 950);
+		if (prefs.contains("HIGHSCORE") == true)
+		{
+			font.draw(sb, "HIGHSCORE: " + prefs.getInteger("HIGHSCORE"), 1400, 1050);
+		} else
+		{
+			font.draw(sb, "HIGHSCORE: " + (int) score, 1400, 1050);
+		}
+
 		renders++;
 		sb.end();
 	}

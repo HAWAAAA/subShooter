@@ -16,7 +16,7 @@ public class Medkit
 	private static final int MOVEMENT = -350;
 	private Vector3 position;
 	private Vector3 velocity;
-	private Animation fishA;
+	private Animation medkitA;
 	private Texture texture;
 
 	public Medkit(float x)
@@ -25,7 +25,7 @@ public class Medkit
 		int rand = (int) (Math.random() * 690);
 
 		texture = new Texture("medkitA.png");
-		fishA = new Animation(new TextureRegion(texture), 4, 0.2f);
+		medkitA = new Animation(new TextureRegion(texture), 4, 0.2f);
 
 		position = new Vector3(x, rand, 0);
 		velocity = new Vector3(0, 0, 0);
@@ -34,7 +34,7 @@ public class Medkit
 
 	public void update(float dt)
 	{
-		fishA.update(dt);
+		medkitA.update(dt);
 		velocity.add(0, position.y, 0);
 		velocity.scl(dt);
 		position.add(MOVEMENT * dt, 0, 0);
@@ -45,10 +45,10 @@ public class Medkit
 
 	public TextureRegion getFish()
 	{
-		return fishA.getFrame();
+		return medkitA.getFrame();
 	}
 
-	public Vector3 getPosition()
+	public Vector3 getPos()
 	{
 		return position;
 

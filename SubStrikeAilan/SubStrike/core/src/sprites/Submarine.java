@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
+
 
 public class Submarine
 {
@@ -21,7 +24,9 @@ public class Submarine
 	private Sound splash1;
 	private Music Underwater;
 	private Music waves;
+	private boolean sound;
 	private boolean above = false;
+	
 
 	public Submarine(float x, float y)
 	{
@@ -32,10 +37,10 @@ public class Submarine
 
 		splash = Gdx.audio.newSound(Gdx.files.internal("WaterSplash.mp3"));
 		splash1 = Gdx.audio.newSound(Gdx.files.internal("WaterSplash1.mp3"));
-
+		
 		Underwater = Gdx.audio.newMusic(Gdx.files.internal("Underwater.mp3"));
 		Underwater.setLooping(true);
-		Underwater.setVolume(4f);
+		Underwater.setVolume(2f);
 		Underwater.play();
 
 		waves = Gdx.audio.newMusic(Gdx.files.internal("Waves.mp3"));
@@ -81,12 +86,23 @@ public class Submarine
 		{
 			above = false;
 			splash1.play(0.5f);
+		
 		}
+		
+	
 
 		velocity.scl(1 / dt); // adds scale version of velocity
 
 	}
-
+	
+	
+	
+	public void stopSounds() {
+		
+		waves.stop();
+		Underwater.stop();
+	}
+	
 	public Vector3 getPosition()
 	{
 		return position;

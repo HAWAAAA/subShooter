@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,6 +13,8 @@ import state.GameStateManager;
 import state.MenuState;
 import state.SplashState;
 import sprites.Submarine;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class SubStrike extends ApplicationAdapter
 {
@@ -23,6 +26,8 @@ public class SubStrike extends ApplicationAdapter
 	private SpriteBatch batch;
 
 	private Music music;
+
+
 
 	private boolean on = true;
 
@@ -45,6 +50,8 @@ public class SubStrike extends ApplicationAdapter
 		gsm.update(Gdx.graphics.getDeltaTime());
 		gsm.render(batch);
 	}
+
+	
 
 	/*
 	 * @Override public void dispose () { batch.dispose(); }
